@@ -144,45 +144,6 @@ echo "<h3>".JText::_('DUESEXPORT_AVAILABLE_FIELDS').": </h3>".$field_list."<br><
 		<hr>
 		</td>
 	</tr>
-	<tr>
-		<td valign="bottom" align="left" colspan="2"><br />
-		<h3><?php  echo JText::_('DUESEXPORT_CONFIRMEMAIL1')?></h3>
-		</td>
-	</tr>
-	<tr>
-		<td valign="bottom" align="right" width="30%"></td>
-		<td><input class="inputbox" type="checkbox" name="ConfirmationEmail"
-			value="1"></input> <?php  echo JText::_('DUESEXPORT_CONFIRMEMAIL2')?></td>
-	</tr>
-
-	<tr>
-		<td  align="right" width="30%"><?php  echo JText::_('DUESEXPORT_CONFIRMSUBJEMAIL')?></td>
-		<td><input class="inputbox" type="text"
-			name="duesexport_ConfirmationSubject" size="45"
-			value=<?php echo '"'.$email_subject.'"';?>></input></td>
-	</tr>
-	<tr>
-		<td  align="right" width="30%"><?php  echo JText::_('DUESEXPORT_CONFIRMSENDER')?></td>
-		<td><input class="inputbox" type="text"
-			name="duesexport_ConfirmationSender" size="45"
-			value=<?php echo '"'.$email_sender.'"';?>></input></td>
-	</tr>
-	<tr>
-		<td valign="bottom" align="right" width="30%"><?php  echo JText::_('DUESEXPORT_BCC1')?></td>
-		<td><input class="inputbox" type="checkbox" name="BccEmail" value="1"></input>
-		<?php  echo JText::_('DUESEXPORT_BCC2')?></td>
-	</tr>
-	<tr>
-		<td  align="right" width="30%"><?php  echo JText::_('DUESEXPORT_DEFTEXT1')?></td>
-		<td><textarea cols="80" rows="15" name="duesexport_message"
-			class="inputbox"><?php   echo $email_body;?>
-                    </textarea></td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<hr>
-		</td>
-	</tr>
 </table>
 <input type="hidden" name="boxchecked" value="0" /> <input type="hidden"
 	name="task" value="process" /> <input type="hidden" name="boxchecked"
