@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="1.6.0" client="admin" method="upgrade">
+    <name>DUES Export</name>
+    <author>Kris</author>
+ 
+    <license>GNU/GPL</license>
+    <version>V2-3.3.2</version>
+    <description>This component exports dues and users in a CB-Joomla web site using a CSV file using the Community Builder API</description>
+
+
+    <!-- administration part -->
+    <administration>
+
+    <menu task="save"  view="default">Dues Export</menu>
+    <submenu>
+        
+		<menu task="save" view="default">DUESEXPORT_TAB2</menu>
+		<menu task="about" view="default" layout="about">DUESEXPORT_TAB3</menu>
+    </submenu>
+
+ 
+    <files folder="administrator/components/com_duesexport">
+        <filename>config.xml</filename>
+        <filename>controller.php</filename>
+        <filename>index.html</filename>
+     
+        <filename>duesexport.php</filename>
+        <folder>helpers</folder>
+        <folder>views</folder>
+		<folder>controllers</folder>
+    </files>
+
+    <languages folder="administrator/components/com_duesexport/language/en-GB">
+        <language tag="en-GB">en-GB.com_duesexport.ini</language>
+        <language tag="en-GB">en-GB.com_duesexport.sys.ini</language>
+		<language tag="en-GB">en-GB.com_duesexport.menu.ini</language>
+    </languages>
+
+    </administration>
+
+    <params>
+
+    </params>
+
+</extension>
