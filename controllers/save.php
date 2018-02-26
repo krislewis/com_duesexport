@@ -71,72 +71,11 @@ function duesexport_saveusers($delimiter){
 	if((strcasecmp( substr($thisversion,0,3), '1.6' ) >= 0)){
 		$jver16=TRUE;
 	}
-	/*define a set of fields never to save
-	 * this avoids users doing things they should not.
-	 */
-	$never_save=array("id","gid","usertype");
-	$extra_excluded=trim(cbGetParam($_REQUEST, 'duesexport_excluded_fields'));
-	$extra_excluded=str_replace(" ","",$extra_excluded);
-	$extra_fields_exclude=explode($delimiter,$extra_excluded);
-	$never_save=array_merge($never_save,$extra_fields_exclude);
-	/* first retrieve the fields for both the user table anc comprofiler table.
-	 * the keys are the field names  usertype is there because it is specially processed
-	 *
-	 */
-	$full_field_names=$_CB_database->getTableFields(array('#__users','#__comprofiler'),TRUE);
-	$users_fields=$full_field_names['#__users'];
-	$comprofiler_fields=$full_field_names['#__comprofiler'];
-	$users_keys=array_keys($users_fields);
-	$comprofiler_keys=array_keys($comprofiler_fields);
-	$users_fields_edited=array_diff($users_keys, $never_save);
-	//	echo "User fields to save<br>";
-	//	print_r($users_fields_edited);
-	//	echo "<br>";
-	$comprofiler_fields_edited=array_diff($comprofiler_keys,$never_save);
-	//	echo "Comprofiler fields to save<br>";
-	//	print_r($comprofiler_fields_edited);
-	//	echo "<br>";
-	/* Build up the query
-	 * u for the user fields and c for the comprofiler fields
-	 */
-	$query3= " FROM #__users u  LEFT JOIN #__comprofiler c on (u.id=c.user_id)";
-	$query1="SELECT ";
-	$query2a="";
-	$fieldcount=0;
-	$numbfields=count($users_fields_edited);
-	foreach($users_fields_edited as $thisfield){
-		if($fieldcount>0 and $fieldcount<($numbfields)){
-			$query2a=$query2a." ,";
-		}
-		$query2a=$query2a."u.".$thisfield;
-		$fieldcount++;
-	}
-	//add the id field so that we can get the user groups.
-	if ($query2a)
-	{
-		$query2a="u.id,".$query2a;
-	}
-	else {
-		$query2a="u.id";
-	}
 
-	$fieldcount=0;
-	$query2b="";
-	$numbfields=count($comprofiler_fields_edited);
-	if($numbfields>0)
-	foreach($comprofiler_fields_edited as $thisfield){
-		if($fieldcount>0 and $fieldcount<($numbfields)){
-			$query2b=$query2b." ,";
-		}
-		$query2b=$query2b."c.".$thisfield;
-		$fieldcount++;
-	}
-	//	echo "Query2a=",$query2a,"<br>";
-	//	echo "Query2b=",$query2b,"<br>";
-	$query2=$query2a.",".$query2b;
-	$query=$query1.$query2.$query3;
-	//	echo "Trying query = $query <br>";
-	$_CB_database->setQuery($query);
+	$query_3_join="SELECT c.firstname, c.middlename, c.lastname, u.email, c.cb_memberstatus, c.cb_memberlevel, d.year, d.status, d.date_paid ";
+	$query_3_join .= "FROM #__user_dues as d INNER JOIN #__users as u ON u.id=d.user_id INNER JOIN #__comprofiler as c on u.id=c.user_id";
+
+	$_CB_database->setQuery($query_3_join);
 	$result=$_CB_database->query();
 	if(!$result){
 		echo "Error retrieving the data serious error<br>";
@@ -145,8 +84,7 @@ function duesexport_saveusers($delimiter){
 	}
 	$numbusers=$_CB_database->getNumRows();
 	$fulldata=$_CB_database->loadAssocList();
-	//	var_dump($fulldata);
-	$namesarray=array_merge($users_fields_edited,$comprofiler_fields_edited,array("usertype"));
+
 	/*
 	 * Write the page header
 	 *
@@ -172,7 +110,8 @@ function duesexport_saveusers($delimiter){
 		}
 	}
 	// write header array
-	$outputrow= "\"" . implode("\"$delimiter\"", $namesarray) . "\"" ."\r\n";
+	$titlearray=array("First Name", "Middle","Last Name", "Email", "Status", "Level", "Year", "Paid Status", "Date Paid");
+	$outputrow= "\"" . implode("\"$delimiter\"", $titlearray) . "\"" ."\r\n";
 	print $outputrow;
 	$usercount=0;
 	Foreach($fulldata as $thisuser){
@@ -181,15 +120,6 @@ function duesexport_saveusers($delimiter){
 			echo "<br>";
 		}
 
-		$thisuser1=$thisuser;
-		$thisuser_id=$thisuser['id'];
-		//		echo "user id is $thisuser_id <br>";
-		$thisone=new JUser();
-		$result=$thisone->load($thisuser_id);
-		if(!$result){
-			"Echo serious problems retrieving $thisuser_id <br>";
-			return;
-		}
 		if($jver16){
 		$thisusers_groups=$thisone->groups;
 		$thisusers_groupnames=array();
@@ -209,16 +139,13 @@ function duesexport_saveusers($delimiter){
 		$thisuser2=array();
 		// alternative string to use is \0..\37\177..\377
 		// need to skip the first 1 to eliminiate userid;
-		$counter=0;
+
 		foreach($thisuser as $thiscell){
 			$newcell=str_replace("\"","\"\"",$thiscell);
 			$newcell=addcslashes($newcell, "\0..\37");
-			if($counter>0){
-				$thisuser2[]=$newcell;
-			}
-			$counter++;
+			$thisuser2[]=$newcell;
 		}
-		$thisuser2[]=$thisones_types;
+
 		$outputrow= "\"" . implode("\"$delimiter\"", $thisuser2) . "\"" ."\r\n";
 
 		if(!$duesexport_debug){

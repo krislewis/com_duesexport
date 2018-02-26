@@ -12,14 +12,7 @@ if(!(strpos($thisversion,"1.6")===FALSE)){
 echo Jtext::_('DUESEXPORT_ABOUT_STRING1');
 echo Jtext::_('DUESEXPORT_ABOUT_STRING2');
 echo Jtext::_('DUESEXPORT_ABOUT_STRING3');
-echo Jtext::_('DUESEXPORT_ABOUT_STRING4');
-echo Jtext::_('DUESEXPORT_ABOUT_STRING5');
-echo Jtext::_('DUESEXPORT_ABOUT_STRING6');
-echo Jtext::_('DUESEXPORT_ABOUT_STRING7');
-echo Jtext::_('DUESEXPORT_ABOUT_STRING8');
-echo Jtext::_('DUESEXPORT_ABOUT_STRING9');
-echo Jtext::_('DUESEXPORT_ABOUT_STRING10');
-echo Jtext::_('DUESEXPORT_ABOUT_STRING11');
+
 
 ?>
 
