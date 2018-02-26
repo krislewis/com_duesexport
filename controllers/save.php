@@ -138,12 +138,15 @@ function duesexport_saveusers($delimiter){
 		// now we have to escape each field
 		$thisuser2=array();
 		// alternative string to use is \0..\37\177..\377
-		// need to skip the first 1 to eliminiate userid;
-
+		$counter=0;
 		foreach($thisuser as $thiscell){
 			$newcell=str_replace("\"","\"\"",$thiscell);
 			$newcell=addcslashes($newcell, "\0..\37");
+			if($counter == 7){ //paid status, change to paid or owed
+				$newcell = ($thiscell == 0 ? JTEXT::_('DUESEXPORT_OWED') : JTEXT::_('DUESEXPORT_PAID'));
+			}
 			$thisuser2[]=$newcell;
+			$counter++;
 		}
 
 		$outputrow= "\"" . implode("\"$delimiter\"", $thisuser2) . "\"" ."\r\n";

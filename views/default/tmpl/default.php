@@ -38,29 +38,13 @@ $excluded_fields=$params->get('save_exclude_list');
 /* get field list for display purposes
  * 
  */
-$never_save=array("id","cid");
-$full_field_names=$_CB_database->getTableFields(array('#__users','#__comprofiler'),TRUE);
-$users_fields=$full_field_names['#__users'];
-$dues_fields=$_CB_database->getTableFields(array('#__user_dues','#__comprofiler'),TRUE);
-$comprofiler_fields=$full_field_names['#__comprofiler'];
-$users_keys=array_keys($users_fields);
-$comprofiler_keys=array_keys($comprofiler_fields);
-$users_fields_edited=array_diff($users_keys, $never_save);
-$comprofiler_fields_edited=array_diff($comprofiler_keys,$never_save);
-$available_fields=array_merge($users_fields_edited,$comprofiler_fields_edited);
-$field_list=implode(($delimiter." "),$available_fields);
+
 if(strlen($delimiter)<1){
 	echo "<b><h1>".JText::_('DUESEXPORT_WARNING1'). "</h1></b><br>",
 	"<b><h2>".JTEXT::_('DUESEXPORT_WARNING2')."</h2></b><br><br><br>";
 }
 
-echo "<p>".JText::_('DUESEXPORT_STRING2A')." ";
-echo "".JText::_('DUESEXPORT_STRING2B')." ";
-echo "".JText::_('DUESEXPORT_STRING2C')." ";
-echo "".JText::_('DUESEXPORT_STRING2D')." ";
-echo "".JText::_('DUESEXPORT_COMPOUNDHOWTO')."</p>";
-echo "<h3>".JText::_('DUESEXPORT_STRING3')."</h3>";
-echo "<h3>".JText::_('DUESEXPORT_AVAILABLE_FIELDS').": </h3>".$field_list."<br><br>";
+
 ?>
 
 
@@ -84,14 +68,10 @@ echo "<h3>".JText::_('DUESEXPORT_AVAILABLE_FIELDS').": </h3>".$field_list."<br><
 	</tr>
 	<tr>
 		<td valign="top" align="right" width="30%"><?php  echo JText::_('DUESEXPORT_MODE')?></td>
-		<td><input class="inputbox" type="radio" name="opptype" value="1" />
-		<?php  echo JText::_('DUESEXPORT_ADD')?><br />
-		<input class="inputbox" type="radio" name="opptype" value="2"
-			checked="checked" /><?php  echo JText::_('DUESEXPORT_EDIT')?><br />
-		<input class="inputbox" type="radio" name="opptype" value="3" /> <b>
+		<td>
+		<input class="inputbox" type="radio" name="opptype" value="3" checked="checked"/> <b>
 		<?php  echo JText::_('DUESEXPORT_SAVE')?></b><br />
-		<input class="inputbox" type="radio" name="opptype" value="4" /> <b>
-		<?php  echo JText::_('DUESEXPORT_DELETE')?></b><br />
+		
 		</td>
 	</tr>
 	<tr>
@@ -107,43 +87,8 @@ echo "<h3>".JText::_('DUESEXPORT_AVAILABLE_FIELDS').": </h3>".$field_list."<br><
 		<td><input class="inputbox" type="checkbox" name="defaultname"
 			value="1" checked="checked" /> <?php  echo JText::_('DUESEXPORT_NAMEDEFAULTMESSAGE')?></td>
 	</tr>
-	<tr>
-		<td valign="top" align="right" width="30%"><?php  echo JText::_('DUESEXPORT_MARKCONFIRMED')?></td>
-		<td><input class="inputbox" type="radio" name="confirmed" value="1" checked="checked"/>
-		<?php  echo JText::_('JYES')?><input class="inputbox" type="radio" name="confirmed" value="0"/>
-		<?php  echo JText::_('JNO')?> : <?php  echo " ".JText::_('DUESEXPORT_CONFIRMEDTEXT')?></td>
-  </tr>
-  <tr>
-		<td valign="bottom" align="right" width="30%"><?php  echo JText::_('DUESEXPORT_AUDIT1')?></td>
-		<td><input class="inputbox" type="checkbox" name="auditlist" value="1"
-			checked="checked" /><?php  echo JText::_('DUESEXPORT_AUDIT2')?>.</td>
-	</tr>
-	<tr>
-		<td valign="bottom" align="right" width="30%"><?php  echo JText::_('DUESEXPORT_HASHED1')?></td>
-		<td><input class="inputbox" type="checkbox" name="hashedpwinput"
-			value="1" /> <b><?php  echo " ".JText::_('DUESEXPORT_HASHED2')?></b>.</td>
-	</tr>
-	<tr>
-		<td valign="top" align="right" width="30%"><?php  echo JText::_('DUESEXPORT_DEFDOMAIN1')?></td>
-		<td><input class="inputbox" type="text" name="defaultemaildomain"
-			value="invalid.com" ></input><?php  echo " ".JText::_('DUESEXPORT_DEFDOMAIN2')?></td>
-	</tr>
-	<tr>
-		<td valign="bottom" align="right" width="30%"><?php  echo JText::_('DUESEXPORT_FILEIMPORT')?></td>
-		<td><input class="inputbox" type="file" name="csvusers" value=""
-			size="40" maxlength="250"></input></td>
-	</tr>
-	<tr>
-	<td valign="top" align="right" width="30%"><?php echo JText::_('DUESEXPORT_EXCLUDED_FIELDS')?></td>
-	<td><textarea cols="50" rows="5" name="duesexport_excluded_fields" value="user_id"
-			class="inputbox"><?php   echo $excluded_fields?>
-                    </textarea></td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<hr>
-		</td>
-	</tr>
+
+	
 </table>
 <input type="hidden" name="boxchecked" value="0" /> <input type="hidden"
 	name="task" value="process" /> <input type="hidden" name="boxchecked"
