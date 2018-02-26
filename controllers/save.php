@@ -74,6 +74,7 @@ function duesexport_saveusers($delimiter){
 
 	$query_3_join="SELECT c.firstname, c.middlename, c.lastname, u.email, c.cb_memberstatus, c.cb_memberlevel, d.year, d.status, d.date_paid ";
 	$query_3_join .= "FROM #__user_dues as d INNER JOIN #__users as u ON u.id=d.user_id INNER JOIN #__comprofiler as c on u.id=c.user_id";
+	$query_3_join .= " ORDER BY d.user_id";
 
 	$_CB_database->setQuery($query_3_join);
 	$result=$_CB_database->query();
