@@ -121,20 +121,6 @@ function duesexport_saveusers($delimiter){
 			echo "<br>";
 		}
 
-		if($jver16){
-		$thisusers_groups=$thisone->groups;
-		$thisusers_groupnames=array();
-			foreach ($thisusers_groups as $group_number)
-				{
-					$thisusers_groupnames[]=$_CB_framework->acl->get_group_name($group_number);
-				}
-		if(count($thisusers_groupnames)>0){
-				$thisones_types=implode("|",($thisusers_groupnames));
-				//	$thisones_types=implode("|",array_keys($thisusers_groups));
-			}
-		} else {
-			$thisones_types=$thisone->usertype;
-		}
 
 		// now we have to escape each field
 		$thisuser2=array();
