@@ -91,7 +91,7 @@ function duesexport_saveusers($delimiter){
 	 *
 	 */
 	$output_csv_name="users_".date( 'YmdHiS', $_CB_framework->now() ).".csv";
-	echo "$output_csv_name <br>";
+	//echo "$output_csv_name <br>";
 	if(!$duesexport_debug){
 		while( @ob_end_clean() );
 		ob_start();
@@ -129,7 +129,7 @@ function duesexport_saveusers($delimiter){
 		foreach($thisuser as $thiscell){
 			$newcell=str_replace("\"","\"\"",$thiscell);
 			$newcell=addcslashes($newcell, "\0..\37");
-			if($counter == 7){ //paid status, change to paid or owed
+			if($counter == 8){ //paid status, change to paid or owed
 				$newcell = ($thiscell == 0 ? JTEXT::_('DUESEXPORT_OWED') : JTEXT::_('DUESEXPORT_PAID'));
 			}
 			$thisuser2[]=$newcell;
